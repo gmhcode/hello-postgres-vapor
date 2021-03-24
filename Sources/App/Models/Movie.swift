@@ -18,6 +18,10 @@ final class Movie: Model, Content {
     @Field(key: "title")
     var title: String
     
+    // hasMany - This is saying there will be a property on all the children called "movie"
+    @Children(for: \.$movie)
+    var reviews: [Review]
+    
     init() {}
     
     init(id: UUID? = nil, title: String) {
