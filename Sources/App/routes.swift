@@ -11,7 +11,7 @@ func routes(_ app: Application) throws {
     app.post("movies", use: moviesController.create)
     
 //    http://localhost:8080/movies GET
-    app.get("movies", use: moviesController.all)
+//    app.get("movies", use: moviesController.all)
     
     //    http://localhost:8080/movies/:movieId DELETE
     app.delete("movies",":movieId", use: moviesController.delete)
@@ -21,7 +21,7 @@ func routes(_ app: Application) throws {
     
     //    http://localhost:8080/movies/:movieId/reviews GET
     app.get("movies",":movieId","reviews", use: reviewsController.getByMovieId)
-}
+//}
 
 
 //func routes(_ app: Application) throws {
@@ -33,27 +33,27 @@ func routes(_ app: Application) throws {
 //    app.get("movies", use: moviesController.all)
 //
 //
-//    //movie/:movieId/actor/:actorId
-//    app.post("movie",":movieId","actor",":actorId") { req -> EventLoopFuture<HTTPStatus> in
-//
-//        //get the movie
-//        let movie = Movie
-//            .find(req.parameters.get("movieId"), on: req.db)
-//            .unwrap(or: Abort(.notFound))
-//
-//        //get actor
-//        let actor = Actor
-//            .find(req.parameters.get("actorId"), on: req.db)
-//            .unwrap(or: Abort(.notFound))
-//
-//        return movie
-//            .and(actor)
-//            .flatMap { (movie, actor) in
-//
-//            movie.$actors.attach(actor, on: req.db)
-//
-//        }.transform(to: .ok)
-//    }
+    //movie/:movieId/actor/:actorId
+    app.post("movie",":movieId","actor",":actorId") { req -> EventLoopFuture<HTTPStatus> in
+
+        //get the movie
+        let movie = Movie
+            .find(req.parameters.get("movieId"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+
+        //get actor
+        let actor = Actor
+            .find(req.parameters.get("actorId"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+
+        return movie
+            .and(actor)
+            .flatMap { (movie, actor) in
+
+            movie.$actors.attach(actor, on: req.db)
+
+        }.transform(to: .ok)
+    }
 //
 //
 //
@@ -79,15 +79,15 @@ func routes(_ app: Application) throws {
 //
 //
 //    //Get
-//    app.get("movies") { req in
-//        Movie
-//            .query(on: req.db)
-//            //1. serves all the reviews with this movie
-//            .with(\.$reviews)
-//            //2. and all the actors
-//            .with(\.$actors)
-//            .all()
-//    }
+    app.get("movies") { req in
+        Movie
+            .query(on: req.db)
+            //1. serves all the reviews with this movie
+            .with(\.$reviews)
+            //2. and all the actors
+            .with(\.$actors)
+            .all()
+    }
 //
 //    // /movies/id
 //    app.get("movies",":movieId") { req -> EventLoopFuture<Movie> in
@@ -167,4 +167,4 @@ func routes(_ app: Application) throws {
 //
 //    }
 //
-//}
+}

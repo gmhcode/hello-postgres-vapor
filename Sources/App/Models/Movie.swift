@@ -26,7 +26,7 @@ final class Movie: Model, Content {
     @Children(for: \.$movie)
     var reviews: [Review]
     
-    //manyToMany - useing a movie, get all the actors a for that movie
+    //manyToMany - using a movie, get all the actors for that movie
     @Siblings(through: MovieActor.self, from: \.$movie, to: \.$actor)
     var actors: [Actor]
     

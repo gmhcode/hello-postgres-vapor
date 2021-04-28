@@ -11,7 +11,10 @@ import Vapor
 final class MoviesController {
     
     func delete(_ req: Request)throws -> EventLoopFuture<HTTPStatus> {
-        Movie.find(req.parameters.get("movieId"), on: req.db).unwrap(or: Abort(.notFound)).flatMap {
+        Movie
+            .find(req.parameters.get("movieId"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap {
             $0.delete(on: req.db)
         }.transform(to: .ok)
     }
